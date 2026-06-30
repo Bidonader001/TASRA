@@ -1,0 +1,73 @@
+"""Public customer portal via QR token."""
+
+from fastapi import APIRouter, Depends, HTTPException
+from fastapi.responses import Response
+from sqlalchemy import select
+from sqlalchemy.ext.asyncio import AsyncSession
+from sqlalchemy.orm import selectinload
+
+from app.database import get_db
+from app.models.customer import Customer
+from app.models.sale import Sale
+from app.schemas import CustomerPortalResponse, CustomerResponse, PhotoResponse, SaleResponse
+from app.services.storage import get_storage
+
+router = APIRouter(prefix="/portal", tags=["Customer Portal"])
+
+
+@router.get("/{token}", response_model=CustomerPortalResponse)
+async def customer_portal(token: str, db: AsyncSession = Depends(get_db)):
+    result = await db.execute(
+        select(Customer)
+        .options(selectinload(Customer.photos), selectinload(Customer.sales))
+        .where(Customer.qr_token == token)
+    )
+    customer = result.scalar_one_or_none()
+    if not customer:
+        raise HTTPException(status_code=404, detail="Invalid or expired link")
+
+    storage = get_storage()
+    photos = []
+    for photo in customer.photos:
+        p = PhotoResponse.model_validate(photo)
+        p.url = storage.get_url(photo.file_path)
+        photos.append(p)
+
+    sales = [
+        SaleResponse(
+            id=s.id,
+            customer_id=s.customer_id,
+            employee_id=s.employee_id,
+            photo_count=s.photo_count,
+            price_per_photo=s.price_per_photo,
+            amount=s.amount,
+            notes=s.notes,
+            created_at=s.created_at,
+        )
+        for s in customer.sales
+    ]
+    return CustomerPortalResponse(
+        customer=CustomerResponse.model_validate(customer),
+        photos=photos,
+        sales=sales,
+    )
+
+
+@router.get("/{token}/photos/{photo_id}/download")
+async def download_photo(token: str, photo_id: int, db: AsyncSession = Depends(get_db)):
+    result = await db.execute(
+        select(Customer).options(selectinload(Customer.photos)).where(Customer.qr_token == token)
+    )
+    customer = result.scalar_one_or_none()
+    if not customer:
+        raise HTTPException(status_code=404, detail="Invalid link")
+    photo = next((p for p in customer.photos if p.id == photo_id), None)
+    if not photo:
+        raise HTTPException(status_code=404, detail="Photo not found")
+    storage = get_storage()
+    content = await storage.read(photo.file_path)
+    return Response(
+        content=content,
+        media_type=photo.mime_type,
+        headers={"Content-Disposition": f'attachment; filename="{photo.file_name}"'},
+    )
