@@ -68,15 +68,15 @@ export default function SalesPage() {
   return (
     <DashboardLayout>
       <div className="space-y-6">
-        <div className="flex items-center justify-between">
+        <div className="mobile-page-header">
           <div>
-            <h1 className="text-3xl font-bold">Print Sales</h1>
+            <h1 className="text-2xl font-bold sm:text-3xl">Print Sales</h1>
             <p className="text-sm text-muted-foreground">
               {branchLabel ? `${branchLabel} — ` : ""}
               {formatCurrency(printPrice)} per photo
             </p>
           </div>
-          <Button onClick={() => setShowForm(!showForm)}>{showForm ? "Cancel" : "New Print Order"}</Button>
+          <Button className="w-full sm:w-auto" onClick={() => setShowForm(!showForm)}>{showForm ? "Cancel" : "New Print Order"}</Button>
         </div>
 
         {showForm && (
@@ -130,7 +130,7 @@ export default function SalesPage() {
                   <Input value={form.notes} onChange={(e) => setForm({ ...form, notes: e.target.value })} />
                 </div>
                 <div className="flex items-end">
-                  <div className="rounded-lg border bg-secondary/30 p-4">
+                  <div className="w-full rounded-lg border bg-secondary/30 p-4">
                     <p className="text-sm text-muted-foreground">Total amount</p>
                     <p className="text-2xl font-bold">{formatCurrency(totalPreview)}</p>
                     <p className="text-xs text-muted-foreground">
@@ -139,7 +139,7 @@ export default function SalesPage() {
                   </div>
                 </div>
                 <div className="md:col-span-2">
-                  <Button type="submit">Save Print Order</Button>
+                  <Button type="submit" className="w-full sm:w-auto">Save Print Order</Button>
                 </div>
               </form>
             </CardContent>

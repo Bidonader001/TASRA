@@ -42,10 +42,10 @@ export default function CustomerPortalPage({ params }: { params: Promise<{ token
   }
 
   return (
-    <div className="min-h-screen bg-background p-6">
+    <div className="min-h-screen bg-background p-4 sm:p-6">
       <div className="mx-auto max-w-4xl space-y-8">
         <header className="text-center">
-          <h1 className="text-3xl font-bold">Your Photo Gallery</h1>
+          <h1 className="text-2xl font-bold sm:text-3xl">Your Photo Gallery</h1>
           <p className="text-muted-foreground">Welcome, {data.customer.name}</p>
         </header>
 
@@ -64,7 +64,7 @@ export default function CustomerPortalPage({ params }: { params: Promise<{ token
                   />
                   <a
                     href={resolveAssetUrl(`/api/v1/portal/${token}/photos/${photo.id}/download`)}
-                    className="absolute bottom-2 right-2 rounded-md bg-black/70 p-2 opacity-0 transition-opacity group-hover:opacity-100"
+                    className="absolute bottom-2 right-2 rounded-md bg-black/70 p-2 opacity-100 transition-opacity sm:opacity-0 sm:group-hover:opacity-100"
                   >
                     <Download className="h-4 w-4" />
                   </a>
@@ -81,7 +81,7 @@ export default function CustomerPortalPage({ params }: { params: Promise<{ token
           ) : (
             <div className="space-y-2">
               {data.sales.map((sale) => (
-                <div key={sale.id} className="flex items-center justify-between rounded-lg border p-4">
+                <div key={sale.id} className="flex flex-col gap-2 rounded-lg border p-4 sm:flex-row sm:items-center sm:justify-between">
                   <div>
                     <p className="font-medium">Order #{sale.id}</p>
                     <p className="text-sm text-muted-foreground">

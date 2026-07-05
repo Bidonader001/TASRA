@@ -8,6 +8,7 @@ from sqlalchemy.orm import selectinload
 
 from app.database import get_db
 from app.models.customer import Customer
+from app.models.photo import Photo
 from app.models.sale import Sale
 from app.schemas import CustomerPortalResponse, CustomerResponse, PhotoResponse, SaleResponse
 from app.services.storage import get_storage
@@ -30,7 +31,7 @@ async def customer_portal(token: str, db: AsyncSession = Depends(get_db)):
     photos = []
     for photo in customer.photos:
         p = PhotoResponse.model_validate(photo)
-        p.url = storage.get_url(photo.file_path)
+        p.url = f"/api/v1/portal/{token}/photos/{photo.id}/view"
         photos.append(p)
 
     sales = [
@@ -51,6 +52,21 @@ async def customer_portal(token: str, db: AsyncSession = Depends(get_db)):
         photos=photos,
         sales=sales,
     )
+
+
+@router.get("/{token}/photos/{photo_id}/view")
+async def view_photo(token: str, photo_id: int, db: AsyncSession = Depends(get_db)):
+    result = await db.execute(
+        select(Photo)
+        .join(Customer, Photo.customer_id == Customer.id)
+        .where(Customer.qr_token == token, Photo.id == photo_id)
+    )
+    photo = result.scalar_one_or_none()
+    if not photo:
+        raise HTTPException(status_code=404, detail="Photo not found")
+    storage = get_storage()
+    content = await storage.read(photo.file_path)
+    return Response(content=content, media_type=photo.mime_type)
 
 
 @router.get("/{token}/photos/{photo_id}/download")

@@ -13,16 +13,17 @@ export function Logo({ className, height = 36, href }: LogoProps) {
     <Image
       src="/taswera-logo.jpg"
       alt="TASWERA"
-      width={Math.round(height * 3.2)}
+      width={height}
       height={height}
-      className={cn("h-auto w-auto object-contain", className)}
+      className={cn("block shrink-0 rounded-sm object-contain", className)}
+      style={{ width: height, height }}
       priority
     />
   );
 
   if (href) {
     return (
-      <Link href={href} className="inline-flex items-center">
+      <Link href={href} className="inline-flex shrink-0 items-center" aria-label="TASWERA home">
         {img}
       </Link>
     );

@@ -140,7 +140,7 @@ export default function AssignmentsPage() {
     <DashboardLayout>
       <div className="space-y-6">
         <div>
-          <h1 className="text-3xl font-bold">Manager Assignments</h1>
+          <h1 className="text-2xl font-bold sm:text-3xl">Manager Assignments</h1>
           <p className="text-muted-foreground">
             Assign employees to managers, edit assignments, or remove them.
           </p>
@@ -148,11 +148,11 @@ export default function AssignmentsPage() {
 
         <Card>
           <CardHeader><CardTitle>Add Assignment</CardTitle></CardHeader>
-          <CardContent className="flex flex-wrap items-end gap-4">
-            <div>
+          <CardContent className="grid gap-4 sm:flex sm:flex-wrap sm:items-end">
+            <div className="w-full sm:w-auto">
               <Label>Manager</Label>
               <select
-                className="mt-1 flex h-10 min-w-[200px] rounded-md border border-input bg-white px-3 text-sm"
+                className="mt-1 flex h-10 w-full rounded-md border border-input bg-white px-3 text-sm sm:min-w-[200px]"
                 value={managerId}
                 onChange={(e) => setManagerId(e.target.value)}
               >
@@ -162,10 +162,10 @@ export default function AssignmentsPage() {
                 ))}
               </select>
             </div>
-            <div>
+            <div className="w-full sm:w-auto">
               <Label>Employee</Label>
               <select
-                className="mt-1 flex h-10 min-w-[200px] rounded-md border border-input bg-white px-3 text-sm"
+                className="mt-1 flex h-10 w-full rounded-md border border-input bg-white px-3 text-sm sm:min-w-[200px]"
                 value={employeeId}
                 onChange={(e) => setEmployeeId(e.target.value)}
               >
@@ -175,7 +175,7 @@ export default function AssignmentsPage() {
                 ))}
               </select>
             </div>
-            <Button onClick={handleAssign}>Assign</Button>
+            <Button onClick={handleAssign} className="w-full sm:w-auto">Assign</Button>
           </CardContent>
         </Card>
 

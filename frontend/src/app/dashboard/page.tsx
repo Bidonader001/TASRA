@@ -47,7 +47,7 @@ export default function DashboardPage() {
     <DashboardLayout>
       <div className="space-y-6">
         <div>
-          <h1 className="text-3xl font-bold">Dashboard</h1>
+          <h1 className="text-2xl font-bold sm:text-3xl">Dashboard</h1>
           <p className="text-muted-foreground">Welcome back, {user?.first_name}</p>
         </div>
 
@@ -95,7 +95,7 @@ export default function DashboardPage() {
                 />
               </div>
               <p className="text-sm text-muted-foreground">
-                Commission: 6 EGP per photo up to target, then 12 EGP per photo after target.
+                Commission is calculated from the branch rate on each sale, with a separate rate after target.
                 Your total this month: <strong>{formatCurrency(stats.my_commission)}</strong>
               </p>
             </CardContent>

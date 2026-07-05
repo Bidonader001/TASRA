@@ -51,11 +51,11 @@ export default function CustomersPage() {
   return (
     <DashboardLayout>
       <div className="space-y-6">
-        <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-          <h1 className="text-3xl font-bold">Customers</h1>
-          <div className="flex gap-2">
-            <Input placeholder="Search..." value={search} onChange={(e) => setSearch(e.target.value)} className="w-48" />
-            <Button onClick={() => setShowForm(!showForm)}>{showForm ? "Cancel" : "Add Customer"}</Button>
+        <div className="mobile-page-header">
+          <h1 className="text-2xl font-bold sm:text-3xl">Customers</h1>
+          <div className="mobile-action-row">
+            <Input placeholder="Search..." value={search} onChange={(e) => setSearch(e.target.value)} className="w-full sm:w-48" />
+            <Button className="w-full sm:w-auto" onClick={() => setShowForm(!showForm)}>{showForm ? "Cancel" : "Add Customer"}</Button>
           </div>
         </div>
 
@@ -67,7 +67,7 @@ export default function CustomersPage() {
                 <div><Label>Name</Label><Input value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} required /></div>
                 <div><Label>Email</Label><Input type="email" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} /></div>
                 <div><Label>Phone</Label><Input value={form.phone} onChange={(e) => setForm({ ...form, phone: e.target.value })} /></div>
-                <div><Button type="submit">Create</Button></div>
+                <div><Button type="submit" className="w-full sm:w-auto">Create</Button></div>
               </form>
             </CardContent>
           </Card>

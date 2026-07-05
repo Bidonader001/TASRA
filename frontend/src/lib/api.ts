@@ -19,6 +19,8 @@ export interface Branch {
   name: string;
   code?: string;
   price_per_photo: number;
+  commission_per_photo: number;
+  commission_after_target_per_photo: number;
   is_active: boolean;
   created_at: string;
   updated_at: string;
@@ -392,11 +394,28 @@ class ApiClient {
     return this.request<Branch[]>("/branches");
   }
 
-  createBranch(data: { name: string; code?: string; price_per_photo: number; is_active?: boolean }) {
+  createBranch(data: {
+    name: string;
+    code?: string;
+    price_per_photo: number;
+    commission_per_photo: number;
+    commission_after_target_per_photo: number;
+    is_active?: boolean;
+  }) {
     return this.request<Branch>("/branches", { method: "POST", body: JSON.stringify(data) });
   }
 
-  updateBranch(id: number, data: Partial<{ name: string; code: string; price_per_photo: number; is_active: boolean }>) {
+  updateBranch(
+    id: number,
+    data: Partial<{
+      name: string;
+      code: string;
+      price_per_photo: number;
+      commission_per_photo: number;
+      commission_after_target_per_photo: number;
+      is_active: boolean;
+    }>
+  ) {
     return this.request<Branch>(`/branches/${id}`, { method: "PATCH", body: JSON.stringify(data) });
   }
 

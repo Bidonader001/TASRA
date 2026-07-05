@@ -39,12 +39,12 @@ export default function ReportsPage() {
   return (
     <DashboardLayout>
       <div className="space-y-6">
-        <h1 className="text-3xl font-bold">Reports</h1>
+        <h1 className="text-2xl font-bold sm:text-3xl">Reports</h1>
         <div className="grid gap-4 md:grid-cols-2">
           {reports.map((report) => (
             <Card key={report.id}>
               <CardHeader><CardTitle className="text-lg">{report.name}</CardTitle></CardHeader>
-              <CardContent className="flex flex-wrap gap-2">
+              <CardContent className="grid grid-cols-3 gap-2 sm:flex sm:flex-wrap">
                 <Button variant="outline" size="sm" onClick={() => download(report.id, "csv")}>CSV</Button>
                 <Button variant="outline" size="sm" onClick={() => download(report.id, "excel")}>Excel</Button>
                 <Button variant="outline" size="sm" onClick={() => download(report.id, "pdf")}>PDF</Button>

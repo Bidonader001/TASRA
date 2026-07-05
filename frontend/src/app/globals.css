@@ -38,4 +38,32 @@
   .taswera-card {
     @apply rounded-lg border border-border bg-card shadow-sm;
   }
+
+  .mobile-page-header {
+    @apply flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between;
+  }
+
+  .mobile-action-row {
+    @apply flex w-full flex-col gap-2 sm:w-auto sm:flex-row;
+  }
+}
+
+@media (max-width: 767px) {
+  table {
+    display: block;
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  thead,
+  tbody,
+  tr {
+    min-width: max-content;
+  }
+
+  th,
+  td {
+    white-space: nowrap;
+  }
 }

@@ -29,13 +29,13 @@ export default function HierarchyPage() {
     <DashboardLayout>
       <div className="space-y-6">
         <div>
-          <h1 className="text-3xl font-bold">Team Hierarchy</h1>
+          <h1 className="text-2xl font-bold sm:text-3xl">Team Hierarchy</h1>
           <p className="text-muted-foreground">
             Organization tree — Admin, Managers, and Employees with monthly target progress.
           </p>
         </div>
 
-        <div className="flex flex-wrap gap-4">
+        <div className="grid gap-4 sm:flex sm:flex-wrap">
           <div>
             <Label>Year</Label>
             <Input
@@ -80,7 +80,7 @@ export default function HierarchyPage() {
 
         <Card>
           <CardContent className="pt-6 text-sm text-muted-foreground">
-            <p><strong>Commission:</strong> 6 EGP per photo up to target, 12 EGP per photo after exceeding target.</p>
+            <p><strong>Commission:</strong> Each branch has its own before-target and after-target rate.</p>
             <p className="mt-1">Employees without a target show printed photos only. Set targets in Employee Targets.</p>
           </CardContent>
         </Card>

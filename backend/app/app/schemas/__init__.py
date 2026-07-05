@@ -171,6 +171,8 @@ class BranchCreate(BaseModel):
     name: str = Field(min_length=1, max_length=150)
     code: Optional[str] = Field(None, max_length=20)
     price_per_photo: float = Field(gt=0, default=120.0)
+    commission_per_photo: float = Field(gt=0, default=6.0)
+    commission_after_target_per_photo: float = Field(gt=0, default=12.0)
     is_active: bool = True
 
 
@@ -178,6 +180,8 @@ class BranchUpdate(BaseModel):
     name: Optional[str] = Field(None, min_length=1, max_length=150)
     code: Optional[str] = Field(None, max_length=20)
     price_per_photo: Optional[float] = Field(None, gt=0)
+    commission_per_photo: Optional[float] = Field(None, gt=0)
+    commission_after_target_per_photo: Optional[float] = Field(None, gt=0)
     is_active: Optional[bool] = None
 
 
@@ -188,6 +192,8 @@ class BranchResponse(BaseModel):
     name: str
     code: Optional[str] = None
     price_per_photo: float
+    commission_per_photo: float
+    commission_after_target_per_photo: float
     is_active: bool
     created_at: datetime
     updated_at: datetime

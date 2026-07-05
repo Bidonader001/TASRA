@@ -31,7 +31,7 @@ export default function SearchPage() {
   return (
     <DashboardLayout>
       <div className="space-y-6">
-        <h1 className="text-3xl font-bold">Search</h1>
+        <h1 className="text-2xl font-bold sm:text-3xl">Search</h1>
         <Input
           placeholder="Search customers, employees, managers, sales..."
           value={query}
@@ -42,12 +42,12 @@ export default function SearchPage() {
         <div className="space-y-2">
           {results.map((r) => (
             <Card key={`${r.type}-${r.id}`}>
-              <CardContent className="flex items-center justify-between p-4">
-                <div>
+              <CardContent className="flex flex-col gap-3 p-4 sm:flex-row sm:items-center sm:justify-between">
+                <div className="min-w-0">
                   <p className="font-medium">{r.title}</p>
                   {r.subtitle && <p className="text-sm text-muted-foreground">{r.subtitle}</p>}
                 </div>
-                <span className="rounded-full bg-secondary px-3 py-1 text-xs capitalize">{r.type}</span>
+                <span className="w-fit rounded-full bg-secondary px-3 py-1 text-xs capitalize">{r.type}</span>
               </CardContent>
             </Card>
           ))}

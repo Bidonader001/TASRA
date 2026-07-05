@@ -64,11 +64,11 @@ export default function PhotosPage() {
   return (
     <DashboardLayout>
       <div className="space-y-6">
-        <h1 className="text-3xl font-bold">Photos</h1>
+        <h1 className="text-2xl font-bold sm:text-3xl">Photos</h1>
 
-        <div className="flex gap-4">
+        <div className="grid gap-4 sm:flex">
           <select
-            className="flex h-10 rounded-md border border-input bg-background px-3 text-sm"
+            className="flex h-10 w-full rounded-md border border-input bg-background px-3 text-sm sm:w-auto"
             value={customerId || ""}
             onChange={(e) => setCustomerId(Number(e.target.value))}
           >
@@ -86,7 +86,7 @@ export default function PhotosPage() {
               onDragLeave={() => setDragging(false)}
               onDrop={onDrop}
               className={cn(
-                "flex flex-col items-center justify-center rounded-lg border-2 border-dashed p-12 transition-colors",
+                "flex flex-col items-center justify-center rounded-lg border-2 border-dashed p-6 text-center transition-colors sm:p-12",
                 dragging ? "border-primary bg-accent/50" : "border-border"
               )}
             >
@@ -101,7 +101,7 @@ export default function PhotosPage() {
                 id="file-upload"
                 onChange={(e) => e.target.files && handleFiles(e.target.files)}
               />
-              <Button variant="outline" asChild disabled={uploading}>
+              <Button variant="outline" asChild disabled={uploading} className="w-full sm:w-auto">
                 <label htmlFor="file-upload" className="cursor-pointer">Browse Files</label>
               </Button>
               {uploading && (

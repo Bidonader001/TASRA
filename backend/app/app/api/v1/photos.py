@@ -118,7 +118,9 @@ async def upload_photos(
 
 
 @router.get("/files/{file_path:path}")
-async def serve_file(file_path: str):
+async def serve_file(file_path: str, db: AsyncSession = Depends(get_db)):
+    result = await db.execute(select(Photo).where(Photo.file_path == file_path))
+    photo = result.scalar_one_or_none()
     storage = get_storage()
     try:
         content = await storage.read(file_path)
@@ -126,7 +128,7 @@ async def serve_file(file_path: str):
         raise HTTPException(status_code=404, detail="File not found")
     except Exception:
         raise HTTPException(status_code=404, detail="File not found")
-    return Response(content=content, media_type="image/jpeg")
+    return Response(content=content, media_type=photo.mime_type if photo else "application/octet-stream")
 
 
 @router.delete("/{photo_id}", response_model=MessageResponse)

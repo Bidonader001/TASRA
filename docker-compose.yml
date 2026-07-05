@@ -16,7 +16,7 @@ services:
 
   backend:
     build:
-      context: ./backend
+      context: ./backend/app
       dockerfile: Dockerfile
     restart: unless-stopped
     healthcheck:
@@ -49,10 +49,10 @@ services:
       context: ./frontend
       dockerfile: Dockerfile
       args:
-        NEXT_PUBLIC_API_URL: ${NEXT_PUBLIC_API_URL:-http://localhost/api/v1}
+        NEXT_PUBLIC_API_URL: ${NEXT_PUBLIC_API_URL:-/api/v1}
     restart: unless-stopped
     environment:
-      NEXT_PUBLIC_API_URL: ${NEXT_PUBLIC_API_URL:-http://localhost/api/v1}
+      NEXT_PUBLIC_API_URL: ${NEXT_PUBLIC_API_URL:-/api/v1}
     depends_on:
       - backend
     expose:

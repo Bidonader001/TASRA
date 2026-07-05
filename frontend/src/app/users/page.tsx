@@ -77,16 +77,16 @@ export default function UsersPage() {
   return (
     <DashboardLayout>
       <div className="space-y-6">
-        <div className="flex items-center justify-between">
+        <div className="mobile-page-header">
           <div>
-            <h1 className="text-3xl font-bold">{isManager ? "Employees" : "Users"}</h1>
+            <h1 className="text-2xl font-bold sm:text-3xl">{isManager ? "Employees" : "Users"}</h1>
             {isManager ? (
               <p className="text-muted-foreground">Add employees to your team.</p>
             ) : (
               <p className="text-muted-foreground">Create users and edit their roles only.</p>
             )}
           </div>
-          <Button onClick={() => setShowForm(!showForm)}>
+          <Button className="w-full sm:w-auto" onClick={() => setShowForm(!showForm)}>
             {showForm ? "Cancel" : isManager ? "Add Employee" : "Create User"}
           </Button>
         </div>
@@ -134,7 +134,7 @@ export default function UsersPage() {
                     minLength={8}
                   />
                 </div>
-                <div><Button type="submit">{isManager ? "Add Employee" : "Create"}</Button></div>
+                <div><Button type="submit" className="w-full sm:w-auto">{isManager ? "Add Employee" : "Create"}</Button></div>
               </form>
             </CardContent>
           </Card>

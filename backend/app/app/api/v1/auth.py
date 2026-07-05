@@ -92,6 +92,8 @@ def _branch_response(branch: Branch) -> BranchResponse:
         name=branch.name,
         code=branch.code,
         price_per_photo=branch.price_per_photo,
+        commission_per_photo=branch.commission_per_photo,
+        commission_after_target_per_photo=branch.commission_after_target_per_photo,
         is_active=branch.is_active,
         created_at=branch.created_at,
         updated_at=branch.updated_at,

@@ -60,13 +60,13 @@ export default function TargetsPage() {
     <DashboardLayout>
       <div className="space-y-6">
         <div>
-          <h1 className="text-3xl font-bold">Employee Targets</h1>
+          <h1 className="text-2xl font-bold sm:text-3xl">Employee Targets</h1>
           <p className="text-muted-foreground">
-            Set monthly photo targets. Commission: 6 EGP/photo up to target, 12 EGP/photo after target.
+            Set monthly photo targets. Commission follows each branch rate before and after target.
           </p>
         </div>
 
-        <div className="flex flex-wrap gap-4">
+        <div className="grid gap-4 sm:flex sm:flex-wrap">
           <div>
             <Label>Year</Label>
             <Input type="number" value={year} onChange={(e) => setYear(Number(e.target.value))} className="w-28" />
@@ -88,8 +88,8 @@ export default function TargetsPage() {
         <Card>
           <CardHeader><CardTitle>Set Monthly Target</CardTitle></CardHeader>
           <CardContent>
-            <form onSubmit={handleSetTarget} className="flex flex-wrap items-end gap-4">
-              <div>
+            <form onSubmit={handleSetTarget} className="grid gap-4 sm:flex sm:flex-wrap sm:items-end">
+              <div className="w-full sm:w-auto">
                 <Label>Employee</Label>
                 <select
                   className="flex h-10 min-w-[200px] rounded-md border border-input bg-white px-3 text-sm"
@@ -103,18 +103,18 @@ export default function TargetsPage() {
                   ))}
                 </select>
               </div>
-              <div>
+              <div className="w-full sm:w-auto">
                 <Label>Target (photos/month)</Label>
                 <Input
                   type="number"
                   min="1"
                   value={form.target_photos}
                   onChange={(e) => setForm({ ...form, target_photos: e.target.value })}
-                  className="w-40"
+                  className="w-full sm:w-40"
                   required
                 />
               </div>
-              <Button type="submit">Save Target</Button>
+              <Button type="submit" className="w-full sm:w-auto">Save Target</Button>
             </form>
           </CardContent>
         </Card>
@@ -138,8 +138,8 @@ export default function TargetsPage() {
                     <th className="p-4 text-left">Printed</th>
                     <th className="p-4 text-left">Target</th>
                     <th className="p-4 text-left">Progress</th>
-                    <th className="p-4 text-left">Base (6 EGP)</th>
-                    <th className="p-4 text-left">Bonus (12 EGP)</th>
+                    <th className="p-4 text-left">Before Target</th>
+                    <th className="p-4 text-left">After Target</th>
                     <th className="p-4 text-left">Total Commission</th>
                   </tr>
                 </thead>

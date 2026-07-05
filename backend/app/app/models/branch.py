@@ -19,6 +19,8 @@ class Branch(Base):
     name: Mapped[str] = mapped_column(String(150), nullable=False, unique=True)
     code: Mapped[str | None] = mapped_column(String(20), nullable=True, unique=True)
     price_per_photo: Mapped[float] = mapped_column(Float, nullable=False, default=120.0)
+    commission_per_photo: Mapped[float] = mapped_column(Float, nullable=False, default=6.0)
+    commission_after_target_per_photo: Mapped[float] = mapped_column(Float, nullable=False, default=12.0)
     is_active: Mapped[bool] = mapped_column(Boolean, default=True, nullable=False)
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=utcnow)
     updated_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=utcnow, onupdate=utcnow)

@@ -15,11 +15,14 @@ import {
   Users,
   Network,
   Building2,
+  Menu,
+  X,
 } from "lucide-react";
 import { Logo } from "@/components/brand/logo";
 import { useAuth } from "@/components/providers/auth-provider";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { useState } from "react";
 
 const navItems = [
   { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard, roles: ["admin", "manager", "employee"] },
@@ -39,6 +42,7 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
   const { user, logout, loading } = useAuth();
   const pathname = usePathname();
   const router = useRouter();
+  const [mobileOpen, setMobileOpen] = useState(false);
 
   if (loading) {
     return (
@@ -118,13 +122,75 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
         </div>
       </aside>
       <div className="flex flex-1 flex-col">
-        <header className="flex h-16 items-center justify-between border-b border-border bg-white px-6 md:hidden">
+        <header className="sticky top-0 z-30 flex h-16 items-center justify-between border-b border-border bg-white px-4 md:hidden">
           <Logo href="/dashboard" height={28} />
-          <Button variant="ghost" size="sm" onClick={() => logout().then(() => router.push("/login"))}>
-            Logout
+          <Button
+            variant="ghost"
+            size="icon"
+            aria-label={mobileOpen ? "Close navigation" : "Open navigation"}
+            onClick={() => setMobileOpen((open) => !open)}
+          >
+            {mobileOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
           </Button>
         </header>
-        <main className="flex-1 overflow-auto bg-secondary/30 p-6">{children}</main>
+        {mobileOpen && (
+          <div className="border-b border-border bg-white p-3 md:hidden">
+            <nav className="grid grid-cols-2 gap-2">
+              {filteredNav.map((item) => {
+                const Icon = item.icon;
+                const active = pathname === item.href;
+                const label =
+                  item.href === "/users" && user.role === "manager" ? "Employees" : item.label;
+                return (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    onClick={() => setMobileOpen(false)}
+                    className={cn(
+                      "flex min-h-11 items-center gap-2 rounded-md px-3 text-sm font-medium",
+                      active
+                        ? "bg-foreground text-background"
+                        : "bg-secondary text-foreground/80"
+                    )}
+                  >
+                    <Icon className="h-4 w-4 shrink-0" />
+                    <span className="truncate">{label}</span>
+                  </Link>
+                );
+              })}
+            </nav>
+            <div className="mt-3 rounded-md bg-secondary p-3 text-sm">
+              <p className="font-medium">{user.first_name} {user.last_name}</p>
+              <p className="text-muted-foreground capitalize">{user.role}</p>
+              {user.current_branch_name && (
+                <p className="mt-1 text-xs text-muted-foreground">Branch: {user.current_branch_name}</p>
+              )}
+              <div className="mt-3 grid gap-2">
+                {(user.role === "employee" || user.role === "manager") && (
+                  <Button
+                    variant="outline"
+                    className="w-full justify-start"
+                    onClick={() => {
+                      setMobileOpen(false);
+                      router.push("/select-branch");
+                    }}
+                  >
+                    Change branch
+                  </Button>
+                )}
+                <Button
+                  variant="outline"
+                  className="w-full justify-start gap-2"
+                  onClick={() => logout().then(() => router.push("/login"))}
+                >
+                  <LogOut className="h-4 w-4" />
+                  Logout
+                </Button>
+              </div>
+            </div>
+          </div>
+        )}
+        <main className="flex-1 overflow-auto bg-secondary/30 p-4 sm:p-6">{children}</main>
       </div>
     </div>
   );

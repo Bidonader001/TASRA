@@ -39,7 +39,7 @@ export default function SettingsPage() {
     <DashboardLayout>
       <div className="max-w-xl space-y-6">
         <div>
-          <h1 className="text-3xl font-bold">Print Pricing</h1>
+          <h1 className="text-2xl font-bold sm:text-3xl">Print Pricing</h1>
           <p className="text-muted-foreground">Set the price employees charge per printed photo</p>
         </div>
 
@@ -69,7 +69,7 @@ export default function SettingsPage() {
                     Employees enter how many photos were printed. Total = photos × this price.
                   </p>
                 </div>
-                <Button type="submit" disabled={saving}>
+                <Button type="submit" disabled={saving} className="w-full sm:w-auto">
                   {saving ? "Saving..." : "Save Price"}
                 </Button>
               </form>
